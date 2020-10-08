@@ -396,23 +396,22 @@ public class EvaluationService {
 
 
 	//it's ugly but it works
-	static List<Long> primeFactors = new ArrayList<>();
 
-	public List<Long> calculatePrimeFactorsOf(long l) {		
+	public List<Long> calculatePrimeFactorsOf(long l) {	
+		List<Long> primeFactors = new ArrayList<>();
 		int sqrt = (int) Math.sqrt(l);
 		for (int i = 1; i <= sqrt+1; i++) {
 			if(isPrime(i) && l%i==0){
 				primeFactors.add((long) i);
 				if(l%(i*i) == 0) {
-					factorTree(i, l);
+					factorTree(i, l, primeFactors);
 				}
 			} 
 		}
 		return primeFactors;
 	}
 	
-	//this method is recursive and is potentially dangerous because there only is only kind of a base case.
-	public void factorTree(int prime, long l) {
+	public void factorTree(int prime, long l, List<Long> primeFactors) {
 		long factor = l/prime;
 		if(isPrime((int)factor) && factor*factor == l) {
 			primeFactors.add((long) prime);
@@ -425,7 +424,7 @@ public class EvaluationService {
 		for(int i=2; i<=factor; i++) {
 			if(isPrime(i) && factor%i==0) {
 				primeFactors.add((long) i);
-				factorTree(i, factor);
+				factorTree(i, factor, primeFactors);
 				break;
 			}
 		}
