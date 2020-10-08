@@ -614,7 +614,7 @@ public class EvaluationServiceTest {
 	public void testSumOfMultiplesOf4and6UpToFifteen() {
 
 		int[] set = { 4, 6 };
-		int output = evaluationService.getSumOfMultiples(15, set);
+		int output = evaluationService.getSumOfMultiples(15, set);//4,6,8,12
 		assertEquals(30, output);
 
 	}
