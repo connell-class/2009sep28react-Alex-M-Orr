@@ -410,6 +410,7 @@ public class EvaluationService {
 		}
 		return primeFactors;
 	}
+	
 	//this method is recursive and is potentially dangerous because there only is only kind of a base case.
 	public void factorTree(int prime, long l) {
 		long factor = l/prime;
