@@ -856,9 +856,26 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
+		if(string.charAt(string.length()-1) == '?') {
+			string = string.substring(0, string.length()-1);
+		}
 		String[] split = string.split(" ");
 		String thisCase ="";
-		string = string.toLowerCase();
+		string = string.toLowerCase();		
+		
+		String regex = "^-?\\d*\\.{0,1}\\d+$";
+		Pattern pattern = Pattern.compile(regex); 
+		ArrayList<Integer> storeInts= new ArrayList();
+		
+		//finds the positive and negative integers in split
+		for(int i = 0; i < split.length;i++) {
+			if(pattern.matches(regex, split[i])) {
+				storeInts.add(Integer.parseInt(split[i]));
+			}
+		}
+		
+		System.out.println(storeInts.get(0));
+		int result = 0;
 		if(string.contains("plus")) {
 			thisCase = "plus";
 		}
@@ -876,12 +893,21 @@ public class EvaluationService {
 		}
 		switch(thisCase) {
 			case "plus":
+				result = storeInts.get(0) + storeInts.get(1);
+				break;
 			case "minus":
+				result = storeInts.get(0) - storeInts.get(1);
+				break;
 			case "multiplied":
-			case "divided":
-				
+				result = storeInts.get(0) * storeInts.get(1);
+				break;
+			case "divided":	
+				result = storeInts.get(0) / storeInts.get(1);
+				break;
 		}
-		return 0;
+		System.out.println(result);
+		return result;
+		
 	}
 
 }
