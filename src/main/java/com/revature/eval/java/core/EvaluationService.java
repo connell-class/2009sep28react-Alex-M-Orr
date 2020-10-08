@@ -219,8 +219,11 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Map<String, Integer> wordCount(String string) {
+
+		Pattern pattern = Pattern.compile("[,\\s]\\s*");
 		Map<String, Integer> map = new HashMap<>();
-		String[] words = string.split(" ");
+		String[] words = pattern.split(string);
+
 		for(int i = 0; i<words.length; i++) {
 			if(!map.containsKey(words[i])) {
 				map.put(words[i], 1);
@@ -229,12 +232,6 @@ public class EvaluationService {
 				map.replace(words[i], map.get(words[i]) + 1);
 			}
 		}
-
-
-
-		//			for(int i = 0; i<words.length;i++) {
-		//				System.out.println(words[i]);
-		//			}
 		return map;
 	}
 
@@ -277,15 +274,20 @@ public class EvaluationService {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			int index = -1;
 			int left = 0;
 			int right = sortedList.size();
-			int mid = sortedList.size() /2;
-			//			while(index == -1) {			//				if(sortedList.get(mid) == t) {
-			//					index = mid;
-			//					return index;
-			//				}			//				else {			//					if(sortedList.get(mid).compareTo(t)) {			//									//					}			//					else if(sortedList.get(mid).compareTo(t)) {			//					}			//				}			//			}
-			return index;
+			while(left<=right) {
+				int mid = (left + (right-1))/2;
+				if(sortedList.get(mid).compareTo(t) == 0 ) {
+					System.out.println("mid = t!!!");
+					return mid;
+				}				else {
+					if(sortedList.get(mid).compareTo(t) < 0) {
+						left = mid+1;
+					}					else if(sortedList.get(mid).compareTo(t) > 0) {
+						right = mid-1;
+					}				}			}
+			return -1;
 		}
 
 		public BinarySearch(List<T> sortedList) {
@@ -391,11 +393,11 @@ public class EvaluationService {
 	 * @param l
 	 * @return
 	 */
-	
-	
+
+
 	//it's ugly but it works
 	static List<Long> primeFactors = new ArrayList<>();
-	
+
 	public List<Long> calculatePrimeFactorsOf(long l) {		
 		int sqrt = (int) Math.sqrt(l);
 		for (int i = 1; i <= sqrt+1; i++) {
@@ -471,7 +473,7 @@ public class EvaluationService {
 		}
 
 		public String rotate(String string) {
-			
+
 			char[] letters = new char[string.length()];
 			String result = "";
 
@@ -497,7 +499,7 @@ public class EvaluationService {
 				letters[i] = (char) (((letters[i]-97)%26)+97);
 				if(wasCaps)
 					letters[i]-=32;
-				
+
 				result+=letters[i];
 			}
 			return result;
@@ -596,7 +598,7 @@ public class EvaluationService {
 				char newChar = (char) ((25 - (storeChars[i]-97)) + 97);
 				spaceCounter++;
 				result += newChar;
-				
+
 			}
 			return result;
 		}
@@ -626,8 +628,8 @@ public class EvaluationService {
 				System.out.println(newChar);
 				System.out.println((storeChars[i]-97 + 25)%25);
 				result+=newChar;
-				
-				
+
+
 			}
 			return result;
 		}
@@ -656,12 +658,12 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {	
-//		still need to use regex to ensure valid characters
+		//		still need to use regex to ensure valid characters
 		String stringPattern = "[0-9X]";
 		Pattern pattern = Pattern.compile(stringPattern);
 		StringBuilder sb = new StringBuilder();
 		int sum = 0;
-		
+
 		for(int i = 0; i <string.length();i++) {
 			Matcher matcher = pattern.matcher(string.charAt(i)+"");
 			if(string.charAt(i) != '-' && matcher.find() ) 
@@ -725,7 +727,7 @@ public class EvaluationService {
 			LocalDate date = LocalDate.of(year, month, day);
 			LocalTime time = LocalTime.of(0, 0);
 			LocalDateTime result = LocalDateTime.of(date, time);
-			
+
 			return result.plus(gigaSecond, ChronoUnit.SECONDS);
 		}
 	}
@@ -862,18 +864,18 @@ public class EvaluationService {
 		String[] split = string.split(" ");
 		String thisCase ="";
 		string = string.toLowerCase();		
-		
+
 		String regex = "^-?\\d*\\.{0,1}\\d+$";
 		Pattern pattern = Pattern.compile(regex); 
 		ArrayList<Integer> storeInts= new ArrayList();
-		
+
 		//finds the positive and negative integers in split
 		for(int i = 0; i < split.length;i++) {
 			if(pattern.matches(regex, split[i])) {
 				storeInts.add(Integer.parseInt(split[i]));
 			}
 		}
-		
+
 		System.out.println(storeInts.get(0));
 		int result = 0;
 		if(string.contains("plus")) {
@@ -892,22 +894,22 @@ public class EvaluationService {
 			System.out.println("Improper formatting :(");
 		}
 		switch(thisCase) {
-			case "plus":
-				result = storeInts.get(0) + storeInts.get(1);
-				break;
-			case "minus":
-				result = storeInts.get(0) - storeInts.get(1);
-				break;
-			case "multiplied":
-				result = storeInts.get(0) * storeInts.get(1);
-				break;
-			case "divided":	
-				result = storeInts.get(0) / storeInts.get(1);
-				break;
+		case "plus":
+			result = storeInts.get(0) + storeInts.get(1);
+			break;
+		case "minus":
+			result = storeInts.get(0) - storeInts.get(1);
+			break;
+		case "multiplied":
+			result = storeInts.get(0) * storeInts.get(1);
+			break;
+		case "divided":	
+			result = storeInts.get(0) / storeInts.get(1);
+			break;
 		}
 		System.out.println(result);
 		return result;
-		
+
 	}
 
 }
