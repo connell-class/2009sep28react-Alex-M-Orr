@@ -278,10 +278,8 @@ public class EvaluationService {
 			int right = sortedList.size();
 			while(left<=right) {
 				int mid = (left + (right-1))/2;
-				if(sortedList.get(mid).compareTo(t) == 0 ) {
-					System.out.println("mid = t!!!");
-					return mid;
-				}				else {
+				if(sortedList.get(mid).compareTo(t) == 0 ) 
+					return mid;				else {
 					if(sortedList.get(mid).compareTo(t) < 0) {
 						left = mid+1;
 					}					else if(sortedList.get(mid).compareTo(t) > 0) {
@@ -576,9 +574,7 @@ public class EvaluationService {
 				storeChars[i] = string.charAt(i);
 			}
 			for(int i =0; i<storeChars.length; i++) {
-				System.out.println(spaceCounter);
 				if(spaceCounter%5==0 && i!=0 && i!= storeChars.length-1 && result.charAt(result.length()-1)!=' '){
-					System.out.println("space added");
 					result+=" ";
 				}
 				//skips spaces
@@ -625,8 +621,6 @@ public class EvaluationService {
 					continue;
 				}
 				char newChar = (char) ((25 - (storeChars[i]-97)) + 97);
-				System.out.println(newChar);
-				System.out.println((storeChars[i]-97 + 25)%25);
 				result+=newChar;
 
 
@@ -812,7 +806,6 @@ public class EvaluationService {
 		int[] nums = new int[sb.length()];
 		for(int i = 0; i<nums.length; i++) {
 			nums[i]=sb.charAt(i)-48;
-			System.out.print(nums[i]);
 		}
 		System.out.println();
 		for (int i = nums.length-2; i >= 0; i-=2) {
@@ -876,7 +869,6 @@ public class EvaluationService {
 			}
 		}
 
-		System.out.println(storeInts.get(0));
 		int result = 0;
 		if(string.contains("plus")) {
 			thisCase = "plus";
@@ -907,7 +899,6 @@ public class EvaluationService {
 			result = storeInts.get(0) / storeInts.get(1);
 			break;
 		}
-		System.out.println(result);
 		return result;
 
 	}
